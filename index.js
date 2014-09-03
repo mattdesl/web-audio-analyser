@@ -2,9 +2,10 @@ var AudioContext = window.AudioContext || window.webkitAudioContext
 
 module.exports = WebAudioAnalyser
 
-function WebAudioAnalyser(audio, ctx) {
-  if (!(this instanceof WebAudioAnalyser)) return new WebAudioAnalyser(audio, ctx)
-
+function WebAudioAnalyser(audio, ctx, opt) {
+  if (!(this instanceof WebAudioAnalyser)) return new WebAudioAnalyser(audio, ctx, opt)
+  opt = opt||{}
+  
   this.ctx = ctx = ctx || new AudioContext
 
   if (!(audio instanceof AudioNode)) {
@@ -20,6 +21,8 @@ function WebAudioAnalyser(audio, ctx) {
 
   this.source.connect(this.analyser)
   this.analyser.connect(ctx.destination)
+  if (opt.destination !== false)
+    this.analyser.connect(opt.destination || ctx.destination)
 }
 
 WebAudioAnalyser.prototype.waveform = function(output) {
