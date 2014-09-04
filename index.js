@@ -20,7 +20,6 @@ function WebAudioAnalyser(audio, ctx, opt) {
   this.source   = audio
 
   this.source.connect(this.analyser)
-  this.analyser.connect(ctx.destination)
   if (opt.destination !== false)
     this.analyser.connect(opt.destination || ctx.destination)
 }
